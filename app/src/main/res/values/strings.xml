@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Interface Login</string>
+    <string name="title">Login</string>
+    <string name="sub_title">Please sign in to continue</string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+    <string name="button">SIGN IN -></string>
+    <string name="account">Don`t have an account?</string>
+    <string name="signUp">Sign UP</string>
+    <string name="title_activity_main_sign_up">MainActivitySignUp</string>
+
+    <string name="subtitle_signUp">Create a new account</string>
+    <string name="Username">Username</string>
+    <string name="phone">Phone</string>
+    <string name="over">Over 18?</string>
+    <string name="button_createAccount">CREATE ACCOUNT</string>
+    <string name="have_account">Already have an account? </string>
+    <string name="signIn">Sign in</string>
+    <string name="title_activity_sing_in">SingInActivity</string>
+    <string name="title_activity_sign_in">SignInActivity</string>
+
+    <string name="mytrips_user">Susanna Hoffs</string>
+    <string name="mytrips_local">You are in Paris</string>
+    <string name="mytrips">My Trips</string>
+
+
+</resources>
