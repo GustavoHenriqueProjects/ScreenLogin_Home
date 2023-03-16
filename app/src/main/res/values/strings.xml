@@ -22,6 +22,10 @@
     <string name="mytrips_user">Susanna Hoffs</string>
     <string name="mytrips_local">You are in Paris</string>
     <string name="mytrips">My Trips</string>
-
+    <string name="mytrips_categories">Categories</string>
+    <string name="mytrips_title_montain">Montain</string>
+    <string name="mytrips_title_snow">Snow</string>
+    <string name="mytrips_title_beach">Beach</string>
+    <string name="mytrips_search">Search your destinity</string>
 
 </resources>
