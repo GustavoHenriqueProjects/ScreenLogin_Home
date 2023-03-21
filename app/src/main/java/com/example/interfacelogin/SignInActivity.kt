@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -30,6 +31,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.interfacelogin.dao.repository.ListCategories
+import com.example.interfacelogin.model.CardCategories
 import com.example.interfacelogin.ui.theme.InterfaceLoginTheme
 
 class SignInActivity : ComponentActivity() {
@@ -37,15 +40,14 @@ class SignInActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             InterfaceLoginTheme {
-                InterfaceSignIn()
+                InterfaceSignIn(ListCategories.getListCategories())
             }
         }
     }
 }
 
-@Preview(showSystemUi = true)
 @Composable
-fun InterfaceSignIn() {
+fun InterfaceSignIn(cards: List<CardCategories>) {
     var search by rememberSaveable {
         mutableStateOf("")
     }
@@ -122,117 +124,51 @@ fun InterfaceSignIn() {
                         color = Color(86, 84, 84)
                     )
                 }
-                Row(modifier = Modifier.fillMaxWidth()) {
-                    Card(
-                        modifier = Modifier
-                            .size(116.dp, 70.dp)
-                            .padding(top = 10.dp, start = 20.dp),
-                        shape = RoundedCornerShape(
-                            topStart = 8.dp,
-                            topEnd = 8.dp,
-                            bottomStart = 8.dp,
-                            bottomEnd = 8.dp
-                        ),
-                        backgroundColor = Color(
-                            red = 207,
-                            green = 6,
-                            blue = 240
-                        )
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    LazyRow() {
+                        for (card in cards){
+                            item {
+                                Card(
+                                    modifier = Modifier
+                                        .size(116.dp, 70.dp)
+                                        .padding(top = 10.dp, start = 20.dp),
+                                    shape = RoundedCornerShape(
+                                        topStart = 8.dp,
+                                        topEnd = 8.dp,
+                                        bottomStart = 8.dp,
+                                        bottomEnd = 8.dp
+                                    ),
+                                    backgroundColor = Color(
+                                        red = 207,
+                                        green = 6,
+                                        blue = 240
+                                    )
 
-                    ) {
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.montain),
-                                contentDescription = "",
-                                modifier = Modifier.size(width = 32.dp, height = 32.dp)
-                            )
+                                ) {
+                                    Column(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        verticalArrangement = Arrangement.Center,
+                                        horizontalAlignment = Alignment.CenterHorizontally
+                                    ) {
+                                        Image(
+                                            //(?:)Se nao ouver nenhuma imagem ele pega a imagem padrão
+                                            painter = card.image ?: painterResource(id = R.drawable.montain),
+                                            contentDescription = "",
+                                            modifier = Modifier.size(width = 32.dp, height = 32.dp)
+                                        )
 
-                            Text(
-                                text = stringResource(id = R.string.mytrips_title_montain),
-                                fontSize = 14.sp,
-                                color = Color.White
+                                        Text(
+                                            text = card.cardtitle,
+                                            fontSize = 14.sp,
+                                            color = Color.White
 
-                            )
-                        }
-                    }
-                    Card(
-                        modifier = Modifier
-                            .size(116.dp, 70.dp)
-                            .padding(top = 10.dp, start = 20.dp),
-                        shape = RoundedCornerShape(
-                            topStart = 8.dp,
-                            topEnd = 8.dp,
-                            bottomStart = 8.dp,
-                            bottomEnd = 8.dp
-                        ),
-                        backgroundColor = Color(
-                            red = 234,
-                            green = 171,
-                            blue = 244
-                        )
-
-                    ) {
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.snow),
-                                contentDescription = "",
-                                modifier = Modifier.size(width = 32.dp, height = 32.dp)
-                            )
-
-                            Text(
-                                text = stringResource(id = R.string.mytrips_title_snow),
-                                fontSize = 14.sp,
-                                color = Color.White
-
-                            )
-                        }
-                    }
-                    Card(
-                        modifier = Modifier
-                            .size(116.dp, 70.dp)
-                            .padding(top = 10.dp, start = 20.dp),
-                        shape = RoundedCornerShape(
-                            topStart = 8.dp,
-                            topEnd = 8.dp,
-                            bottomStart = 8.dp,
-                            bottomEnd = 8.dp
-                        ),
-                        backgroundColor = Color(
-                            red = 234,
-                            green = 171,
-                            blue = 244
-                        )
-
-                    ) {
-                        Column(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.beach),
-                                contentDescription = "",
-                                modifier = Modifier.size(width = 32.dp, height = 32.dp)
-                            )
-
-                            Text(
-                                text = stringResource(id = R.string.mytrips_title_beach),
-                                fontSize = 14.sp,
-                                color = Color.White
-
-                            )
+                                        )
+                                    }
+                                }
+                            }
                         }
                     }
                 }
-
                 OutlinedTextField(
                     value = search,
                     onValueChange = {
@@ -298,16 +234,18 @@ fun InterfaceSignIn() {
                                     .height(120.dp)
                                     .padding(start = 5.dp, top = 5.dp, end = 5.dp)
                             )
-                            Text(text = stringResource(id = R.string.mytrips_post_trips_subtitle_London),
+                            Text(
+                                text = stringResource(id = R.string.mytrips_post_trips_subtitle_London),
                                 modifier = Modifier.padding(start = 5.dp, top = 10.dp),
                                 fontSize = 14.sp,
-                                color = Color(207,6,240)
+                                color = Color(207, 6, 240)
                             )
                             Spacer(modifier = Modifier.height(5.dp))
-                            Text(text = stringResource(id = R.string.mytrips_post_trips_text),
-                            modifier = Modifier.padding(start = 5.dp),
-                            fontSize = 13.sp,
-                            color = Color(160,156,156)
+                            Text(
+                                text = stringResource(id = R.string.mytrips_post_trips_text),
+                                modifier = Modifier.padding(start = 5.dp),
+                                fontSize = 13.sp,
+                                color = Color(160, 156, 156)
                             )
 
                         }
@@ -332,16 +270,18 @@ fun InterfaceSignIn() {
                                     .height(120.dp)
                                     .padding(start = 5.dp, top = 5.dp, end = 5.dp)
                             )
-                            Text(text = stringResource(id = R.string.mytrips_post_trips_subtitle_Porto),
+                            Text(
+                                text = stringResource(id = R.string.mytrips_post_trips_subtitle_Porto),
                                 modifier = Modifier.padding(start = 5.dp, top = 10.dp),
                                 fontSize = 14.sp,
-                                color = Color(207,6,240)
+                                color = Color(207, 6, 240)
                             )
                             Spacer(modifier = Modifier.height(5.dp))
-                            Text(text = stringResource(id = R.string.mytrips_post_trips_text),
+                            Text(
+                                text = stringResource(id = R.string.mytrips_post_trips_text),
                                 modifier = Modifier.padding(start = 5.dp),
                                 fontSize = 13.sp,
-                                color = Color(160,156,156)
+                                color = Color(160, 156, 156)
                             )
                         }
                     }
