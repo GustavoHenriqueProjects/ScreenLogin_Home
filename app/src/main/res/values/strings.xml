@@ -28,10 +28,10 @@
     <string name="mytrips_title_beach">Beach</string>
     <string name="mytrips_search">Search your destinity</string>
     <string name="mytrips_subtitle_post">Past Trips</string>
-    <string name="mytrips_post_trips_subtitle_London">London, 2019</string>
-    <string name="mytrips_post_trips_subtitle_Porto">Porto, 2019</string>
-    <string name="mytrips_post_trips_text">London is the capital and largest city of the United Kingdom, with a population of just under 9 million.</string>
-    <string name="mytrips_post_trips_text2">Porto is the second city in Portugal, the capital of the Oporto District, and one of the Iberian Peninsula`s major urban.</string>
+    <string name="mytrips_post_trips_subtitle_London">London</string>
+    <string name="mytrips_post_trips_subtitle_Porto">Porto</string>
+    <string name="mytrips_text_london">London is the capital and largest city of the United Kingdom, with a population of just under 9 million.</string>
+    <string name="mytrips_text_Porto">Porto is the second city in Portugal, the capital of the Oporto District, and one of the Iberian Peninsula`s major urban.</string>
 
 
 </resources>

@@ -8,7 +8,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -40,7 +42,9 @@ class SignInActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             InterfaceLoginTheme {
-                InterfaceSignIn(ListCategories.getListCategories())
+                InterfaceSignIn(
+                    ListCategories.getListCategories()
+                )
             }
         }
     }
@@ -108,7 +112,6 @@ fun InterfaceSignIn(cards: List<CardCategories>) {
                             color = Color.White,
                             fontWeight = FontWeight.Bold
                         )
-
                     }
                 }
             }
@@ -126,7 +129,7 @@ fun InterfaceSignIn(cards: List<CardCategories>) {
                 }
                 Column(modifier = Modifier.fillMaxWidth()) {
                     LazyRow() {
-                        for (card in cards){
+                        for (card in cards) {
                             item {
                                 Card(
                                     modifier = Modifier
@@ -152,7 +155,8 @@ fun InterfaceSignIn(cards: List<CardCategories>) {
                                     ) {
                                         Image(
                                             //(?:)Se nao ouver nenhuma imagem ele pega a imagem padrão
-                                            painter = card.image ?: painterResource(id = R.drawable.montain),
+                                            painter = card.image
+                                                ?: painterResource(id = R.drawable.montain),
                                             contentDescription = "",
                                             modifier = Modifier.size(width = 32.dp, height = 32.dp)
                                         )
@@ -208,84 +212,57 @@ fun InterfaceSignIn(cards: List<CardCategories>) {
                         color = Color(86, 84, 84)
                     )
                 }
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .verticalScroll(rememberScrollState()),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Spacer(modifier = Modifier.height(6.dp))
-                    Card(
-                        modifier = Modifier.size(width = 355.dp, height = 210.dp),
-                        shape = RoundedCornerShape(
-                            topStart = 8.dp,
-                            topEnd = 8.dp,
-                            bottomStart = 8.dp,
-                            bottomEnd = 8.dp
-                        ),
-                        elevation = 8.dp
-                    ) {
-                        Column(modifier = Modifier.fillMaxWidth()) {
-                            Image(
-                                painter = painterResource(id = R.drawable.trip_london),
-                                contentDescription = "",
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(120.dp)
-                                    .padding(start = 5.dp, top = 5.dp, end = 5.dp)
-                            )
-                            Text(
-                                text = stringResource(id = R.string.mytrips_post_trips_subtitle_London),
-                                modifier = Modifier.padding(start = 5.dp, top = 10.dp),
-                                fontSize = 14.sp,
-                                color = Color(207, 6, 240)
-                            )
-                            Spacer(modifier = Modifier.height(5.dp))
-                            Text(
-                                text = stringResource(id = R.string.mytrips_post_trips_text),
-                                modifier = Modifier.padding(start = 5.dp),
-                                fontSize = 13.sp,
-                                color = Color(160, 156, 156)
-                            )
+                CardsTrips(cards = ListCategories.getListTrips())
+            }
+        }
+    }
+}
 
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(6.dp))
-                    Card(
-                        modifier = Modifier.size(width = 355.dp, height = 210.dp),
-                        shape = RoundedCornerShape(
-                            topStart = 8.dp,
-                            topEnd = 8.dp,
-                            bottomStart = 8.dp,
-                            bottomEnd = 8.dp
-                        ),
-                        elevation = 8.dp
-                    ) {
-                        Column(modifier = Modifier.fillMaxWidth()) {
-                            Image(
-                                painter = painterResource(id = R.drawable.trip_porto),
-                                contentDescription = "",
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(120.dp)
-                                    .padding(start = 5.dp, top = 5.dp, end = 5.dp)
-                            )
-                            Text(
-                                text = stringResource(id = R.string.mytrips_post_trips_subtitle_Porto),
-                                modifier = Modifier.padding(start = 5.dp, top = 10.dp),
-                                fontSize = 14.sp,
-                                color = Color(207, 6, 240)
-                            )
-                            Spacer(modifier = Modifier.height(5.dp))
-                            Text(
-                                text = stringResource(id = R.string.mytrips_post_trips_text),
-                                modifier = Modifier.padding(start = 5.dp),
-                                fontSize = 13.sp,
-                                color = Color(160, 156, 156)
-                            )
-                        }
+@Composable
+fun CardsTrips(cards: List<CardCategories>) {
+    LazyColumn() {
+        items(cards) { card ->
+            Spacer(modifier = Modifier.height(6.dp))
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Card(
+                    modifier = Modifier.size(width = 355.dp, height = 210.dp),
+                    shape = RoundedCornerShape(
+                        topStart = 8.dp,
+                        topEnd = 8.dp,
+                        bottomStart = 8.dp,
+                        bottomEnd = 8.dp
+                    ),
+                    elevation = 8.dp
+                ) {
+                    Column(modifier = Modifier.fillMaxWidth()) {
+                        Image(
+                            painter = card.image ?: painterResource(id = R.drawable.trip_london),
+                            contentDescription = "",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(120.dp)
+                                .padding(start = 5.dp, top = 5.dp, end = 5.dp)
+                        )
+                        Text(
+                            text = "${card.localTrip}, ${card.year}",
+                            modifier = Modifier.padding(start = 5.dp, top = 10.dp),
+                            fontSize = 14.sp,
+                            color = Color(207, 6, 240)
+                        )
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Text(
+                            text = card.text,
+                            modifier = Modifier.padding(start = 5.dp),
+                            fontSize = 13.sp,
+                            color = Color(160, 156, 156)
+                        )
+
                     }
                 }
+                Spacer(modifier = Modifier.height(10.dp))
             }
         }
     }

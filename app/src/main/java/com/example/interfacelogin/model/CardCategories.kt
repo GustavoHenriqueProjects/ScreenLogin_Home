@@ -9,5 +9,10 @@ import androidx.compose.ui.graphics.painter.Painter
 data class CardCategories(
     var id: Int = 0,
     var cardtitle: String = "",
-    var image: Painter? = null // ? -> Significa que esse atrituto pode ser null
+    var image: Painter? = null, // ? -> Significa que esse atrituto pode ser null
+    var text: String = "",
+    var localTrip: String = "",
+    var year: Int = 0,
+    var day: Int = 0,
+    var month: String = ""
 )
