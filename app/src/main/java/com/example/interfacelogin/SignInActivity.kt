@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
@@ -212,7 +213,7 @@ fun InterfaceSignIn(cards: List<CardCategories>) {
                         color = Color(86, 84, 84)
                     )
                 }
-                CardsTrips(cards = ListCategories.getListTrips())
+                CardsTrips(ListCategories.getListTrips())
             }
         }
     }
@@ -220,50 +221,76 @@ fun InterfaceSignIn(cards: List<CardCategories>) {
 
 @Composable
 fun CardsTrips(cards: List<CardCategories>) {
-    LazyColumn() {
-        items(cards) { card ->
-            Spacer(modifier = Modifier.height(6.dp))
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Card(
-                    modifier = Modifier.size(width = 355.dp, height = 210.dp),
-                    shape = RoundedCornerShape(
-                        topStart = 8.dp,
-                        topEnd = 8.dp,
-                        bottomStart = 8.dp,
-                        bottomEnd = 8.dp
-                    ),
-                    elevation = 8.dp
+    Box{
+        LazyColumn() {
+            items(cards) { card ->
+                Spacer(modifier = Modifier.height(6.dp))
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        Image(
-                            painter = card.image ?: painterResource(id = R.drawable.trip_london),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(120.dp)
-                                .padding(start = 5.dp, top = 5.dp, end = 5.dp)
-                        )
-                        Text(
-                            text = "${card.localTrip}, ${card.year}",
-                            modifier = Modifier.padding(start = 5.dp, top = 10.dp),
-                            fontSize = 14.sp,
-                            color = Color(207, 6, 240)
-                        )
-                        Spacer(modifier = Modifier.height(5.dp))
-                        Text(
-                            text = card.text,
-                            modifier = Modifier.padding(start = 5.dp),
-                            fontSize = 13.sp,
-                            color = Color(160, 156, 156)
-                        )
-
+                    Card(
+                        modifier = Modifier.size(width = 355.dp, height = 210.dp),
+                        shape = RoundedCornerShape(
+                            topStart = 8.dp,
+                            topEnd = 8.dp,
+                            bottomStart = 8.dp,
+                            bottomEnd = 8.dp
+                        ),
+                        elevation = 8.dp
+                    ) {
+                        Column(modifier = Modifier.fillMaxWidth()) {
+                            Image(
+                                painter = card.image ?: painterResource(id = R.drawable.trip_london),
+                                contentDescription = "",
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(120.dp)
+                                    .padding(start = 5.dp, top = 5.dp, end = 5.dp)
+                            )
+                            Text(
+                                text = "${card.localTrip}, ${card.year}",
+                                modifier = Modifier.padding(start = 5.dp, top = 10.dp),
+                                fontSize = 14.sp,
+                                color = Color(207, 6, 240)
+                            )
+                            Spacer(modifier = Modifier.height(5.dp))
+                            Text(
+                                text = card.text,
+                                modifier = Modifier.padding(start = 5.dp),
+                                fontSize = 13.sp,
+                                color = Color(160, 156, 156)
+                            )
+                        }
                     }
+                    Spacer(modifier = Modifier.height(10.dp))
                 }
-                Spacer(modifier = Modifier.height(10.dp))
             }
+        }
+        Card(
+            modifier = Modifier
+                .offset(y = 259.dp, x = 310.dp)
+                .size(height = 63.dp, width = 73.dp)
+                .padding(top = 10.dp, start = 20.dp),
+            shape = RoundedCornerShape(
+                topStart = 100.dp,
+                topEnd = 100.dp,
+                bottomStart = 100.dp,
+                bottomEnd = 100.dp
+            ),
+            backgroundColor = Color(
+                red = 207,
+                green = 6,
+                blue = 240
+            )
+
+        ) {
+            Image(painter = painterResource(id = R.drawable.add_24)
+                ,contentDescription = "",
+                 modifier = Modifier.size(3.dp),
+                 colorFilter = ColorFilter.tint(Color.White)
+            )
         }
     }
 }
