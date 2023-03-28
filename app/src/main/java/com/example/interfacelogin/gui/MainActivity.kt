@@ -1,4 +1,4 @@
-package com.example.interfacelogin
+package com.example.interfacelogin.gui
 
 import android.content.Intent
 import android.os.Bundle
@@ -27,6 +27,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.interfacelogin.R
+import com.example.interfacelogin.components.BottomShape
+import com.example.interfacelogin.components.TopShape
 import com.example.interfacelogin.ui.theme.InterfaceLoginTheme
 
 class MainActivity : ComponentActivity() {
@@ -78,18 +81,7 @@ fun InterfaceLoginScreen() {
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.End
             ) {
-
-                Column(
-                    modifier = Modifier
-                        .width(150.dp)
-                        .height(50.dp)
-                        .background(
-                            color = Color(207, 6, 240),
-                            shape = RoundedCornerShape(bottomStart = 20.dp)
-                        )
-                )
-                {
-                }
+               TopShape()
             }
             Spacer(modifier = Modifier.height(80.dp))
 
@@ -150,6 +142,11 @@ fun InterfaceLoginScreen() {
                                 modifier = Modifier.size(26.dp)
                             )
                         },
+                        colors = TextFieldDefaults
+                            .outlinedTextFieldColors(
+                                focusedBorderColor = Color(207,6,240),
+                                unfocusedBorderColor = Color(207,6,240)
+                            )
                         //textStyle = MaterialTheme.typography.body1.copy(color = Color.Black),
                         // placeholder = { Text(text = "Email") }
                     )
@@ -180,6 +177,11 @@ fun InterfaceLoginScreen() {
                                 modifier = Modifier.size(33.dp)
                             )
                         },
+                        colors = TextFieldDefaults
+                            .outlinedTextFieldColors(
+                                focusedBorderColor = Color(207,6,240),
+                                unfocusedBorderColor = Color(207,6,240)
+                            )
                     )
                 }
                 Spacer(modifier = Modifier.height(30.dp))
@@ -245,17 +247,7 @@ fun InterfaceLoginScreen() {
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.Bottom, horizontalAlignment = Alignment.Start
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .width(150.dp)
-                            .height(50.dp)
-                            .background(
-                                color = Color(207, 6, 240),
-                                shape = RoundedCornerShape(topEnd = 20.dp)
-                            )
-                    )
-                    {
-                    }
+                    BottomShape()
                 }
             }
         }

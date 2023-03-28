@@ -1,4 +1,4 @@
-package com.example.interfacelogin
+package com.example.interfacelogin.gui
 
 import android.media.midi.MidiOutputPort
 import android.os.Bundle
@@ -34,6 +34,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.interfacelogin.R
 import com.example.interfacelogin.dao.repository.ListCategories
 import com.example.interfacelogin.model.CardCategories
 import com.example.interfacelogin.ui.theme.InterfaceLoginTheme
@@ -270,7 +271,7 @@ fun CardsTrips(cards: List<CardCategories>) {
         }
         Card(
             modifier = Modifier
-                .offset(y = 259.dp, x = 310.dp)
+                .offset(y = 200.dp, x = 310.dp)
                 .size(height = 63.dp, width = 73.dp)
                 .padding(top = 10.dp, start = 20.dp),
             shape = RoundedCornerShape(

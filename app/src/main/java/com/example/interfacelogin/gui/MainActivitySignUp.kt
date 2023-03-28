@@ -1,16 +1,19 @@
-package com.example.interfacelogin
+package com.example.interfacelogin.gui
 
 import android.os.Bundle
-import android.provider.ContactsContract.CommonDataKinds.Im
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Place
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -24,6 +27,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.interfacelogin.R
+import com.example.interfacelogin.components.BottomShape
+import com.example.interfacelogin.components.TopShape
 import com.example.interfacelogin.ui.theme.InterfaceLoginTheme
 
 class MainActivitySignUp : ComponentActivity() {
@@ -31,7 +37,6 @@ class MainActivitySignUp : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             InterfaceLoginTheme {
-
                 InterfaceLoginUp()
             }
         }
@@ -60,6 +65,7 @@ fun InterfaceLoginUp() {
         mutableStateOf(false)
     }
 
+
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -72,18 +78,9 @@ fun InterfaceLoginUp() {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.End
             ){
-                Column(
-                    modifier = Modifier
-                        .width(150.dp)
-                        .height(50.dp)
-                        .background(
-                            color = Color(207, 6, 240),
-                            shape = RoundedCornerShape(bottomStart = 20.dp)
-                        )
-                ) {
-                }
+                TopShape()
             }
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(20.dp))
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -98,11 +95,31 @@ fun InterfaceLoginUp() {
                     fontWeight = FontWeight.Bold,
                     color = Color.Gray
                 )
+                Box(
+                    //contentAlignment = Alignment.BottomEnd
+                ){
+                    Card(
+                        modifier = Modifier
+                            .size(80.dp),
+                        shape = CircleShape,
+                        border = null
+                    ) {
+                    }
+                    Icon(
+                        imageVector = Icons.Default.Place,
+                        contentDescription = null,
+                    modifier = Modifier.align(Alignment.Center))
+                }
+            }
+            Column(modifier = Modifier.fillMaxWidth()) {
+
             }
             //Spacer(modifier = Modifier.height(40.dp))
             Column(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
             ) {
+
                 OutlinedTextField(value = username, onValueChange = {
                     Log.i("Smartphone", it)
                     username = it
@@ -111,7 +128,7 @@ fun InterfaceLoginUp() {
                     modifier = Modifier
                         .padding(
                             start = 23.dp,
-                            top = 33.dp,
+                            top = 20.dp,
                             end = 40.dp
                         )
                         .fillMaxWidth(),
@@ -191,79 +208,69 @@ fun InterfaceLoginUp() {
                         )
                     },
                     visualTransformation = PasswordVisualTransformation()
-                    )
-            }
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 5.dp)
-            ) {
-                Row (modifier = Modifier.fillMaxWidth()){
-                    Checkbox(checked = boxSelect, onCheckedChange = {
-                        boxSelect = it
-                    },
-                        modifier = Modifier.padding(start = 15.dp))
+                )
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 5.dp)
+                ) {
+                    Row (modifier = Modifier.fillMaxWidth()){
+                        Checkbox(checked = boxSelect, onCheckedChange = {
+                            boxSelect = it
+                        },
+                            modifier = Modifier.padding(start = 15.dp))
 
-                    Spacer(modifier = Modifier.width(2.dp))
+                        Spacer(modifier = Modifier.width(2.dp))
 
-                    Text(text = stringResource(id = R.string.over),
-                        modifier = Modifier.padding(top = 10.dp),
-                        fontSize = 20.sp,
-                        color = Color.Gray
-                    )
-                }
-                Spacer(modifier = Modifier.height(20.dp))
-                Column( modifier = Modifier.fillMaxWidth()) {
-                    Button(
-                        onClick = { /*TODO*/ },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 40.dp, top = 10.dp, end = 40.dp),
-                        shape = RoundedCornerShape(16.dp),
-                        colors = ButtonDefaults.buttonColors(backgroundColor = Color(207, 6, 240))
-
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.button_createAccount),
-                            modifier = Modifier.padding(10.dp),
+                        Text(text = stringResource(id = R.string.over),
+                            modifier = Modifier.padding(top = 10.dp),
                             fontSize = 20.sp,
-                            color = Color.White
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Row(modifier = Modifier
-                        .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.have_account),
-                            fontSize = 18.sp,
                             color = Color.Gray
                         )
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Text(
-                            text = stringResource(id = R.string.signIn),
-                            modifier = Modifier.padding(end = 10.dp),
-                            fontSize = 18.sp,
-                            color = Color(207, 6, 240)
-                        )
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Column( modifier = Modifier.fillMaxWidth()) {
+                        Button(
+                            onClick = { /*TODO*/ },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 40.dp, top = 5.dp, end = 40.dp),
+                            shape = RoundedCornerShape(16.dp),
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Color(207, 6, 240))
+
+                        ) {
+                            Text(
+                                text = stringResource(id = R.string.button_createAccount),
+                                modifier = Modifier.padding(10.dp),
+                                fontSize = 20.sp,
+                                color = Color.White
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Row(modifier = Modifier
+                            .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End
+                        ) {
+                            Text(
+                                text = stringResource(id = R.string.have_account),
+                                fontSize = 18.sp,
+                                color = Color.Gray
+                            )
+                            Spacer(modifier = Modifier.width(10.dp))
+                            Text(
+                                text = stringResource(id = R.string.signIn),
+                                modifier = Modifier.padding(end = 10.dp),
+                                fontSize = 18.sp,
+                                color = Color(207, 6, 240)
+                            )
+                        }
                     }
                 }
             }
             Column(modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Bottom
                 ,horizontalAlignment = Alignment.Start) {
-                Column(
-                    modifier = Modifier
-                        .width(150.dp)
-                        .height(50.dp)
-                        .background(
-                            color = Color(207, 6, 240),
-                            shape = RoundedCornerShape(topEnd = 20.dp)
-                        )
-                )
-                {
-                }
+                BottomShape()
             }
         }
     }
