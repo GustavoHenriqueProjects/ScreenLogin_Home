@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -18,9 +19,13 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -100,15 +105,21 @@ fun InterfaceLoginUp() {
                 ){
                     Card(
                         modifier = Modifier
-                            .size(80.dp),
-                        shape = CircleShape,
-                        border = null
+                            .size(height = 80.dp, width = 70.dp)
+                            .padding(top = 12.dp)
+                            .clip(CircleShape)
+                            .border(2.dp, Color(207,6,240), CircleShape),
                     ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.user),
+                            contentDescription = null,
+                        modifier = Modifier.size(10.dp))
                     }
                     Icon(
-                        imageVector = Icons.Default.Place,
+                        imageVector = ImageVector.vectorResource(R.drawable.camera_alt_24),
                         contentDescription = null,
-                    modifier = Modifier.align(Alignment.Center))
+                        tint = Color(207,6,240),
+                    modifier = Modifier.align(Alignment.BottomEnd))
                 }
             }
             Column(modifier = Modifier.fillMaxWidth()) {

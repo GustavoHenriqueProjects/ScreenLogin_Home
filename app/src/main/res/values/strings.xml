@@ -29,7 +29,9 @@
     <string name="mytrips_search">Search your destinity</string>
     <string name="mytrips_subtitle_post">Past Trips</string>
     <string name="mytrips_post_trips_subtitle_London">London</string>
+    <string name="mytrips_post_trips_month_London"> 18 Feb - 21 Feb</string>
     <string name="mytrips_post_trips_subtitle_Porto">Porto</string>
+    <string name="mytrips_post_trips_month_Porto"> 20 Mar - 26 Mar</string>
     <string name="mytrips_text_london">London is the capital and largest city of the United Kingdom, with a population of just under 9 million.</string>
     <string name="mytrips_text_Porto">Porto is the second city in Portugal, the capital of the Oporto District, and one of the Iberian Peninsula`s major urban.</string>
 

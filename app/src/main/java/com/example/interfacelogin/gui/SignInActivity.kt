@@ -232,7 +232,7 @@ fun CardsTrips(cards: List<CardCategories>) {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Card(
-                        modifier = Modifier.size(width = 355.dp, height = 210.dp),
+                        modifier = Modifier.size(width = 355.dp, height = 223.dp),
                         shape = RoundedCornerShape(
                             topStart = 8.dp,
                             topEnd = 8.dp,
@@ -263,6 +263,14 @@ fun CardsTrips(cards: List<CardCategories>) {
                                 fontSize = 13.sp,
                                 color = Color(160, 156, 156)
                             )
+                            Spacer(modifier = Modifier.height(10.dp))
+                            Row(modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End) {
+                                Text(text = "${card.month}",
+                                    modifier = Modifier.padding(end = 13.dp),
+                                fontSize = 12.sp,
+                                color = Color(207, 6, 240))
+                            }
                         }
                     }
                     Spacer(modifier = Modifier.height(10.dp))

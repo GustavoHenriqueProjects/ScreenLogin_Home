@@ -38,14 +38,16 @@ class ListCategories {
                     image = painterResource(id = R.drawable.trip_london),
                     localTrip = stringResource(id = R.string.mytrips_post_trips_subtitle_London),
                     year = 2019,
-                    text = stringResource(id = R.string.mytrips_text_london)
+                    text = stringResource(id = R.string.mytrips_text_london),
+                    month = stringResource(id = R.string.mytrips_post_trips_month_London)
                 ),
                 CardCategories(
                     id = 1,
                     image = painterResource(id = R.drawable.trip_porto),
                     localTrip = stringResource(id = R.string.mytrips_post_trips_subtitle_Porto),
                     year = 2022,
-                    text = stringResource(id = R.string.mytrips_text_Porto)
+                    text = stringResource(id = R.string.mytrips_text_Porto),
+                    month = stringResource(id = R.string.mytrips_post_trips_month_Porto)
                 )
             )
         }
