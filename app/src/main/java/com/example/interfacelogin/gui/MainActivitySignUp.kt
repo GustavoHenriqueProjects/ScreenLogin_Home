@@ -2,6 +2,7 @@ package com.example.interfacelogin.gui
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -35,11 +36,29 @@ import androidx.compose.ui.unit.sp
 import com.example.interfacelogin.R
 import com.example.interfacelogin.components.BottomShape
 import com.example.interfacelogin.components.TopShape
+import com.example.interfacelogin.model.User
+import com.example.interfacelogin.repository.UserRepository
 import com.example.interfacelogin.ui.theme.InterfaceLoginTheme
 
 class MainActivitySignUp : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+         val user = User(
+             userName = "Fernanda",
+             email = "Fernanda@hgmail.com",
+             password = "123456",
+             phone = "(11) 9999-9999",
+             isOver18 = true
+         )
+
+        val userRep = UserRepository(context = this)
+        val id = userRep.save(user)
+        Toast.makeText(
+            this,
+            "$id",
+            Toast.LENGTH_LONG)
+            .show()
+
         setContent {
             InterfaceLoginTheme {
                 InterfaceLoginUp()
@@ -108,7 +127,7 @@ fun InterfaceLoginUp() {
                             .size(height = 80.dp, width = 70.dp)
                             .padding(top = 12.dp)
                             .clip(CircleShape)
-                            .border(2.dp, Color(207,6,240), CircleShape),
+                            .border(2.dp, Color(207, 6, 240), CircleShape),
                     ) {
                         Image(
                             painter = painterResource(id = R.drawable.user),
