@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 data class User(
     // var pode ser alterado
     @PrimaryKey(autoGenerate = true) var id: Long = 0,
-    @ColumnInfo(name = "user_name") var userName: String = "",
+    @ColumnInfo(name = "user_name") var userName: String = "", //No banco de dados o nome da collumn será user_name
     var email: String = "",
     var password: String = "",
     var phone: String = "",

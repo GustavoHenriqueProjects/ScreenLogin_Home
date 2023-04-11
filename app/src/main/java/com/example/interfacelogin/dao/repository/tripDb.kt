@@ -11,6 +11,7 @@ import com.example.interfacelogin.model.User
 @Database(entities = [User::class], version = 1)
  abstract class TripDb: RoomDatabase(){
 
+    //Silgleton é para desempenho e instabilidade do banco dados, cria apenas uma instancia para inserir dados
     abstract fun userDao(): UserDao
     //getData base devolve a instancia do TripDb
     //companin object representa uma instancia unica
