@@ -201,7 +201,7 @@ fun InterfaceLoginUp() {
                         )
                     }
                 )
-                OutlinedTextField(value = emailState, onValueChange = {
+                OutlinedTextField(value = emailState.lowercase(), onValueChange = {
                     Log.i("Smartphone", it)
                     emailState = it
                 },
@@ -342,7 +342,7 @@ fun saveUser(
     isOver18: Boolean,
     context: Context
 ) {
-    //Criando um objeto Useer
+    //Criando um objeto User
     val newUser = User(
         id = 0,
         userName = userName,

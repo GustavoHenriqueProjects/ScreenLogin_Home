@@ -1,8 +1,10 @@
 package com.example.interfacelogin.gui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -30,6 +32,8 @@ import androidx.compose.ui.unit.sp
 import com.example.interfacelogin.R
 import com.example.interfacelogin.components.BottomShape
 import com.example.interfacelogin.components.TopShape
+import com.example.interfacelogin.dao.repository.UserDao
+import com.example.interfacelogin.repository.UserRepository
 import com.example.interfacelogin.ui.theme.InterfaceLoginTheme
 
 class MainActivity : ComponentActivity() {
@@ -120,7 +124,7 @@ fun InterfaceLoginScreen() {
                     horizontalAlignment = Alignment.Start
                 ) {
                     OutlinedTextField(
-                        value = login_email,
+                        value = login_email.lowercase(),
                         onValueChange = {
                             Log.i("Smartphone", it)
                             login_email = it
@@ -192,9 +196,11 @@ fun InterfaceLoginScreen() {
                 {
                     Button(
                         onClick = {
-                            val openScreenSignIn =
-                                Intent(context, SignInActivity::class.java)
-                            context.startActivity(openScreenSignIn)
+
+                            authenticat(
+                                login_email,
+                                login_password,
+                                context)
                         },
                         modifier = Modifier
                             .width(200.dp)
@@ -252,4 +258,27 @@ fun InterfaceLoginScreen() {
             }
         }
     }
+}
+
+fun authenticat(
+    email:String, password:String, context:Context) {
+
+    val userReposistory = UserRepository(context)
+
+    val user = userReposistory.authenticate(email = email, password = password)
+
+    Log.i("DS2M", "${user.toString()}")
+
+    if(user == null){
+        Toast.makeText(
+            context,
+            "User or Password incorrect!",
+            Toast.LENGTH_SHORT
+        ).show()
+    }else{
+        val openScreenSignIn =
+            Intent(context, SignInActivity::class.java)
+        context.startActivity(openScreenSignIn)
+    }
+
 }

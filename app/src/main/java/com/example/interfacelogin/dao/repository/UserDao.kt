@@ -6,6 +6,9 @@ import com.example.interfacelogin.model.User
 @Dao
 interface UserDao {
 
+    //Primeira etapa cria as funcoes que farao a persistencia no banco
+    //Segunda etapa userRepository
+
     @Insert fun save(user: User): Long
 
     @Update fun update(user: User): Int
