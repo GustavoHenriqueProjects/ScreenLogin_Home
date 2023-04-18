@@ -8,7 +8,9 @@ import com.example.interfacelogin.model.User
 
 //Anotação para representar que essa classe representa o banco de dados
 //A Class tridb Herda RoomDataBase
-@Database(entities = [User::class], version = 1)
+
+//Toda vez que for midificado a aestrutura do bamco é nessesasrio mudar a version
+@Database(entities = [User::class], version = 2)
  abstract class TripDb: RoomDatabase(){
 
     //Silgleton é para desempenho e instabilidade do banco dados, cria apenas uma instancia para inserir dados
@@ -26,7 +28,7 @@ import com.example.interfacelogin.model.User
                     .databaseBuilder(
                         content,
                         TripDb::class.java,
-                        "db_trip").allowMainThreadQueries().build()
+                        "db_trip").allowMainThreadQueries().fallbackToDestructiveMigration().build()
             }
             return  instanceDb
         }

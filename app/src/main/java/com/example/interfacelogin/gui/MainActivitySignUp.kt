@@ -1,19 +1,19 @@
 package com.example.interfacelogin.gui
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -31,6 +32,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.example.interfacelogin.R
 import com.example.interfacelogin.components.BottomShape
 import com.example.interfacelogin.components.TopShape
@@ -68,6 +71,26 @@ class MainActivitySignUp : ComponentActivity() {
 
 @Composable
 fun InterfaceLoginUp() {
+
+    var photoUri by remember{
+        mutableStateOf<Uri?>(value = null) // ? significa que pode ser null
+    }
+
+    //launcher é para abrir a galeria de imagens, quando eu seleciona um foto, retorno para quem chamo a uri
+    //Ele abre o aplicativo padrao de imagem
+    var launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ){ uri -> //Mudei o nome it para uri, função lampda
+        //Quando a tela de imagem for chamada, o laincher me devolve uma uri
+        photoUri = uri //Caminho da imagem
+    }
+
+    //Guarda a imagem em bitmap
+    var painter = rememberAsyncImagePainter(
+        ImageRequest.Builder(LocalContext.current)
+            .data(photoUri)
+            .build()
+    )
 
     var usernameState by remember {
         mutableStateOf("")
@@ -135,16 +158,31 @@ fun InterfaceLoginUp() {
                             .border(2.dp, Color(207, 6, 240), CircleShape),
                     ) {
                         Image(
-                            painter = painterResource(id = R.drawable.user),
+                            painter = if(photoUri == null) painterResource(id = R.drawable.user) else painter,
                             contentDescription = null,
-                            modifier = Modifier.size(10.dp)
+                            contentScale = ContentScale.Crop // Resolva o poblema de deforma a imagem e se adapta
                         )
                     }
                     Icon(
                         imageVector = ImageVector.vectorResource(R.drawable.camera_alt_24),
                         contentDescription = null,
                         tint = Color(207, 6, 240),
-                        modifier = Modifier.align(Alignment.BottomEnd)
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .clickable {
+                                //Quando clica abre a galeria de imagens
+                                //launcher.launch("image/png")
+                                launcher.launch("image/*")
+                                var message = "nada"
+                                Log.i(
+                                    "ds2m",
+                                    // !! Eu sei que nao pode estar nulo, e vou garantir que nao fique( !! double bang)
+                                    //Elves var x: Int? = null      Valor null inicial depois muda para Int
+                                    //Elves verifica o valor da variavel se estiver nullo imprime um valor "null"se nao pega o valor da variavel
+                                    //Se for null o kmotlin trata ?
+                                    "${photoUri?.path ?: message}"// Se for null imprime nada
+                                )
+                            }
                     )
                 }
             }
@@ -279,6 +317,7 @@ fun InterfaceLoginUp() {
                                     emailState,
                                     passwordState,
                                     over18State,
+                                    photoUri?.path ?: "",
                                     context
                                 )
                             },
@@ -340,6 +379,7 @@ fun saveUser(
     email: String,
     password: String,
     isOver18: Boolean,
+    photoUri: String,
     context: Context
 ) {
     //Criando um objeto User
@@ -349,6 +389,7 @@ fun saveUser(
         phone = phone,
         email = email,
         password = password,
+        profilePhoto = photoUri,
         isOver18 = isOver18,
     )
 
