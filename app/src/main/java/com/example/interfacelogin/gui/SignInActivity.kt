@@ -42,6 +42,13 @@ import com.example.interfacelogin.ui.theme.InterfaceLoginTheme
 class SignInActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        intent.extras // Tem as informações da tela anterior
+        Log.i(
+            "ds2m",
+            "id"
+        )
+
         setContent {
             InterfaceLoginTheme {
                 InterfaceSignIn(

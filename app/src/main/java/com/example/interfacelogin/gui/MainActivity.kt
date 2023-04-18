@@ -277,7 +277,11 @@ fun authenticat(
         ).show()
     }else{
         val openScreenSignIn =
-            Intent(context, SignInActivity::class.java)
+            Intent(context,
+                SignInActivity::class.java)
+            openScreenSignIn.putExtra("id", user.id)
+            openScreenSignIn.putExtra("name", user.userName)
+
         context.startActivity(openScreenSignIn)
     }
 
