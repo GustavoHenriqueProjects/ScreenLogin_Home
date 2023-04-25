@@ -1,5 +1,6 @@
 package com.example.interfacelogin.gui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -260,6 +261,7 @@ fun InterfaceLoginScreen() {
     }
 }
 
+@SuppressLint("SuspiciousIndentation")
 fun authenticat(
     email:String, password:String, context:Context) {
 
@@ -280,7 +282,7 @@ fun authenticat(
             Intent(context,
                 SignInActivity::class.java)
             openScreenSignIn.putExtra("id", user.id)
-            openScreenSignIn.putExtra("name", user.userName)
+            //openScreenSignIn.putExtra("name", user.userName)
 
         context.startActivity(openScreenSignIn)
     }

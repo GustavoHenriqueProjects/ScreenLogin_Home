@@ -1,42 +1,34 @@
 package com.example.interfacelogin.gui
 
-import android.media.midi.MidiOutputPort
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.interfacelogin.R
-import com.example.interfacelogin.dao.repository.ListCategories
-import com.example.interfacelogin.model.CardCategories
+import com.example.interfacelogin.model.Trip
+import com.example.interfacelogin.model.Category
+import com.example.interfacelogin.repository.CategoryRepository
+import com.example.interfacelogin.repository.TripRepository
 import com.example.interfacelogin.ui.theme.InterfaceLoginTheme
 
 class SignInActivity : ComponentActivity() {
@@ -52,7 +44,8 @@ class SignInActivity : ComponentActivity() {
         setContent {
             InterfaceLoginTheme {
                 InterfaceSignIn(
-                    ListCategories.getListCategories()
+                    CategoryRepository.getCategories(),
+                    TripRepository.getTrips()
                 )
             }
         }
@@ -60,7 +53,7 @@ class SignInActivity : ComponentActivity() {
 }
 
 @Composable
-fun InterfaceSignIn(cards: List<CardCategories>) {
+fun InterfaceSignIn(categories: List<Category>, trips: List<Trip>){
     var search by rememberSaveable {
         mutableStateOf("")
     }
@@ -70,10 +63,11 @@ fun InterfaceSignIn(cards: List<CardCategories>) {
             Box(modifier = Modifier.fillMaxWidth()) {
                 Image(
                     painter = painterResource(id = R.drawable.background_image),
-                    contentDescription = "",
+                    contentDescription = "Logo",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .size(225.dp)
+                        .size(225.dp), // Ou contentScale.crop
+
                 )
                 Column(
                     modifier = Modifier
@@ -138,51 +132,96 @@ fun InterfaceSignIn(cards: List<CardCategories>) {
                 }
                 Column(modifier = Modifier.fillMaxWidth()) {
                     LazyRow() {
+                        //Modo errado: for , Modo Certo: RecyclerView
+                        /***************************************************************************
                         for (card in cards) {
-                            item {
-                                Card(
-                                    modifier = Modifier
-                                        .size(116.dp, 70.dp)
-                                        .padding(top = 10.dp, start = 20.dp),
-                                    shape = RoundedCornerShape(
-                                        topStart = 8.dp,
-                                        topEnd = 8.dp,
-                                        bottomStart = 8.dp,
-                                        bottomEnd = 8.dp
-                                    ),
-                                    backgroundColor = Color(
-                                        red = 207,
-                                        green = 6,
-                                        blue = 240
+                        item {
+                        Card(
+                        modifier = Modifier
+                        .size(116.dp, 70.dp)
+                        .padding(top = 10.dp, start = 20.dp),
+                        shape = RoundedCornerShape(
+                        topStart = 8.dp,
+                        topEnd = 8.dp,
+                        bottomStart = 8.dp,
+                        bottomEnd = 8.dp
+                        ),
+                        backgroundColor = Color(
+                        red = 207,
+                        green = 6,
+                        blue = 240
+                        )
+
+                        ) {
+                        Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                        Image(
+                        //(?:)Se nao ouver nenhuma imagem ele pega a imagem padrão
+                        painter = card.image
+                        ?: painterResource(id = R.drawable.montain),
+                        contentDescription = "",
+                        modifier = Modifier.size(width = 32.dp, height = 32.dp)
+                        )
+
+                        Text(
+                        text = card.cardtitle,
+                        fontSize = 14.sp,
+                        color = Color.White
+
+                        )
+                        }
+                        }
+                        }
+                        }
+                         ****************************************************************************/
+                        //Loop Inteligente para nao sobrecarregar o smarphone, um Loop controlado de informação
+                        items(categories) {
+                            Card(
+                                modifier = Modifier
+                                    .size(116.dp, 70.dp)
+                                    .padding(top = 10.dp, start = 20.dp),
+                                shape = RoundedCornerShape(
+                                    topStart = 8.dp,
+                                    topEnd = 8.dp,
+                                    bottomStart = 8.dp,
+                                    bottomEnd = 8.dp
+                                ),
+                                backgroundColor = Color(
+                                    red = 207,
+                                    green = 6,
+                                    blue = 240
+                                )
+
+                            ) {
+                                Column(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalArrangement = Arrangement.Center,
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+
+                                    Image(
+                                        painter = it.categoryIcon,
+                                        contentDescription = it.categoryName,
+                                        modifier = Modifier.size(width = 32.dp, height = 32.dp)
+
                                     )
 
-                                ) {
-                                    Column(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        verticalArrangement = Arrangement.Center,
-                                        horizontalAlignment = Alignment.CenterHorizontally
-                                    ) {
-                                        Image(
-                                            //(?:)Se nao ouver nenhuma imagem ele pega a imagem padrão
-                                            painter = card.image
-                                                ?: painterResource(id = R.drawable.montain),
-                                            contentDescription = "",
-                                            modifier = Modifier.size(width = 32.dp, height = 32.dp)
-                                        )
+                                    Text(
+                                        text = "${it.categoryName}",
+                                        fontSize = 14.sp,
+                                        color = Color.White
 
-                                        Text(
-                                            text = card.cardtitle,
-                                            fontSize = 14.sp,
-                                            color = Color.White
-
-                                        )
-                                    }
+                                    )
                                 }
                             }
                         }
                     }
                 }
-                OutlinedTextField(
+                /**********************************************************************************
+                 * OutlinedTextField(
                     value = search,
                     onValueChange = {
                         Log.i("Smartphone", it)
@@ -207,6 +246,31 @@ fun InterfaceSignIn(cards: List<CardCategories>) {
                         )
                     },
                 )
+                 ***********************************************************************************/
+                OutlinedTextField(
+                    value = search,
+                    onValueChange = {search = it},
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            start = 23.dp,
+                            top = 33.dp,
+                            end = 40.dp
+                        ),
+                    shape = RoundedCornerShape(16.dp),
+                    placeholder = {
+                        Text(text = stringResource(id = R.string.mytrips_search))
+                    },
+                    //Transforma o Icon em botao
+                    trailingIcon = {
+                        IconButton(onClick = { /*TODO*/ }) {
+                            Icon(
+                                imageVector = Icons.Default.Search,
+                                contentDescription = ""
+                            )
+                        }
+                    }
+                )
             }
             Column(modifier = Modifier.fillMaxWidth()) {
                 Spacer(modifier = Modifier.height(20.dp))
@@ -221,17 +285,17 @@ fun InterfaceSignIn(cards: List<CardCategories>) {
                         color = Color(86, 84, 84)
                     )
                 }
-                CardsTrips(ListCategories.getListTrips())
+                CardsTrips(TripRepository.getTrips())
             }
         }
     }
 }
 
 @Composable
-fun CardsTrips(cards: List<CardCategories>) {
-    Box{
+fun CardsTrips(trips: List<Trip>) {
+    Box {
         LazyColumn() {
-            items(cards) { card ->
+            items(trips) { it ->
                 Spacer(modifier = Modifier.height(6.dp))
                 Column(
                     modifier = Modifier
@@ -250,7 +314,8 @@ fun CardsTrips(cards: List<CardCategories>) {
                     ) {
                         Column(modifier = Modifier.fillMaxWidth()) {
                             Image(
-                                painter = card.image ?: painterResource(id = R.drawable.trip_london),
+                                painter = painterResource(id = R.drawable.trip_london)
+                                    ?: painterResource(id = R.drawable.trip_london),
                                 contentDescription = "",
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -258,25 +323,29 @@ fun CardsTrips(cards: List<CardCategories>) {
                                     .padding(start = 5.dp, top = 5.dp, end = 5.dp)
                             )
                             Text(
-                                text = "${card.localTrip}, ${card.year}",
+                                text = "${it.location}, ${it.id}",
                                 modifier = Modifier.padding(start = 5.dp, top = 10.dp),
                                 fontSize = 14.sp,
                                 color = Color(207, 6, 240)
                             )
                             Spacer(modifier = Modifier.height(5.dp))
                             Text(
-                                text = card.text,
+                                text = it.description,
                                 modifier = Modifier.padding(start = 5.dp),
                                 fontSize = 13.sp,
                                 color = Color(160, 156, 156)
                             )
                             Spacer(modifier = Modifier.height(10.dp))
-                            Row(modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.End) {
-                                Text(text = "${card.month}",
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.End
+                            ) {
+                                Text(
+                                    text = "${it.startDate.year} - ${it.startDate.year}",
                                     modifier = Modifier.padding(end = 13.dp),
-                                fontSize = 12.sp,
-                                color = Color(207, 6, 240))
+                                    fontSize = 12.sp,
+                                    color = Color(207, 6, 240)
+                                )
                             }
                         }
                     }
@@ -302,10 +371,10 @@ fun CardsTrips(cards: List<CardCategories>) {
             )
 
         ) {
-            Image(painter = painterResource(id = R.drawable.add_24)
-                ,contentDescription = "",
-                 modifier = Modifier.size(3.dp),
-                 colorFilter = ColorFilter.tint(Color.White)
+            Image(
+                painter = painterResource(id = R.drawable.add_24), contentDescription = "",
+                modifier = Modifier.size(3.dp),
+                colorFilter = ColorFilter.tint(Color.White)
             )
         }
     }

@@ -26,5 +26,4 @@ class UserRepository(context: Context) {
     fun authenticate(email: String, password: String): User{
         return db.userDao().authenticate(email, password)
     }
-
 }
